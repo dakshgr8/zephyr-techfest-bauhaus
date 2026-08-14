@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export function CosmicGatewayCanvas() {
   const canvasRef = useRef(null);
-  const [warpStatus, setWarpStatus] = useState("COSMIC GATEWAY: ACTIVE");
-  const [jumps, setJumps] = useState(25);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -48,7 +46,7 @@ export function CosmicGatewayCanvas() {
         x: x,
         y: y,
         radius: 8,
-        maxRadius: mobile ? 130 : 180,
+        maxRadius: mobile ? 120 : 180,
         color: ['#D02020', '#1040C0', '#F0C020', '#121212'][Math.floor(Math.random() * 4)],
         lineWidth: mobile ? 3 : 4,
         shape: Math.random() > 0.5 ? 'circle' : 'square'
@@ -68,16 +66,6 @@ export function CosmicGatewayCanvas() {
           life: 32
         });
       }
-
-      setJumps((prev) => prev + 1);
-      const warpPhrases = [
-        "PORTAL PULSE: 2025.TCET // ACTIVE",
-        "DIMENSIONAL MATRIX // ALIGNED",
-        "SPECTRUM OF INNOVATION // LOCKED",
-        "GATEWAY FLUX // OPTIMAL",
-        "TIME JUMP // SUCCESSFUL"
-      ];
-      setWarpStatus(warpPhrases[Math.floor(Math.random() * warpPhrases.length)]);
     };
 
     const handleClick = (e) => {
@@ -138,13 +126,11 @@ export function CosmicGatewayCanvas() {
       const mobile = isMobile();
       const tablet = isTablet();
 
-      // Perfectly Proportioned Portal Positioning:
-      // Mobile: Centered in the middle-upper focal zone with calibrated radius (65px)
-      // Desktop: Anchored on the right half (width * 0.76) with full radius (115px)
+      // Centered cleanly in the open stage beneath the text on mobile, and on right column on desktop:
       if (mobile) {
-        portal.x = width * 0.5;
-        portal.y = height * 0.46;
-        portal.baseRadius = 66;
+        portal.x = width * 0.5; // Centered horizontally
+        portal.y = Math.min(height * 0.66, height - 135); // Centered in the open space beneath the text & buttons
+        portal.baseRadius = 58;
       } else if (tablet) {
         portal.x = width * 0.74;
         portal.y = height * 0.44;
@@ -187,7 +173,7 @@ export function CosmicGatewayCanvas() {
       ctx.strokeStyle = '#121212';
       ctx.fillStyle = '#F0C020';
       ctx.lineWidth = mobile ? 3 : 4;
-      const dialOffset = mobile ? 22 : 32;
+      const dialOffset = mobile ? 20 : 32;
       ctx.beginPath();
       ctx.arc(0, 0, portal.baseRadius + dialOffset, 0, Math.PI * 2);
       ctx.stroke();
@@ -264,11 +250,11 @@ export function CosmicGatewayCanvas() {
       ctx.restore();
 
       // --- 3. ORBITING DOODLES ---
-      const activeDoodles = mobile ? floatingDoodles.slice(0, 14) : floatingDoodles;
+      const activeDoodles = mobile ? floatingDoodles.slice(0, 12) : floatingDoodles;
 
       activeDoodles.forEach((d) => {
         d.orbitAngle += d.orbitSpeed * speedMultiplier;
-        const currentRadius = mobile ? d.orbitRadius * 0.72 : d.orbitRadius;
+        const currentRadius = mobile ? d.orbitRadius * 0.7 : d.orbitRadius;
         const targetX = cx + Math.cos(d.orbitAngle) * currentRadius;
         const targetY = cy + Math.sin(d.orbitAngle) * (currentRadius * 0.68);
 
@@ -281,7 +267,7 @@ export function CosmicGatewayCanvas() {
           const dx = mouse.x - d.x;
           const dy = mouse.y - d.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < (mobile ? 130 : 180)) {
+          if (dist < (mobile ? 120 : 180)) {
             d.x += dx * 0.02;
             d.y += dy * 0.02;
             ctx.strokeStyle = '#121212';
@@ -302,7 +288,7 @@ export function CosmicGatewayCanvas() {
         ctx.fillStyle = d.color;
         ctx.lineWidth = mobile ? 2 : 2.5;
 
-        const scale = mobile ? 0.85 : 1;
+        const scale = mobile ? 0.8 : 1;
 
         if (d.type === 'cosmonaut') {
           ctx.scale(scale, scale);
@@ -449,20 +435,6 @@ export function CosmicGatewayCanvas() {
         className="w-full h-full cursor-crosshair"
         title="Interactive Cosmic Gateway: Tap anywhere to pulse dimensional shockwaves!"
       />
-
-      {/* Top Right Telemetry Badge */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-2 bg-white border-2 sm:border-3 border-black shadow-[2px_2px_0px_0px_black] sm:shadow-[3px_3px_0px_0px_black] px-2.5 sm:px-3.5 py-1 sm:py-1.5 font-mono text-[10px] sm:text-xs select-none pointer-events-none">
-        <span className="w-2 h-2 rounded-full bg-[#D02020] animate-ping shrink-0" />
-        <span className="font-black text-[#121212] uppercase tracking-wider hidden sm:inline">
-          {warpStatus}
-        </span>
-        <span className="font-black text-[#121212] uppercase tracking-wider sm:hidden">
-          GATEWAY: ACTIVE
-        </span>
-        <span className="bg-[#F0C020] text-black px-1 py-0.5 border border-black font-bold text-[9px] sm:text-[10px]">
-          #{jumps}
-        </span>
-      </div>
 
       {/* Coordinate Crosshair Badge (Hidden on mobile) */}
       <div className="absolute bottom-10 left-6 z-20 hidden lg:flex items-center gap-2 font-mono text-[10px] font-bold text-[#121212]/60 uppercase pointer-events-none">

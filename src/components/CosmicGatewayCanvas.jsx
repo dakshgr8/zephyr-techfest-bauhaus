@@ -387,7 +387,46 @@ export function CosmicGatewayCanvas() {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches[0]) {
+        const rect = canvas.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - rect.left;
+        const touchY = e.touches[0].clientY - rect.top;
+        mouse.x = touchX;
+        mouse.y = touchY;
+        mouse.active = true;
+
+        shockwaves.push({
+          x: touchX,
+          y: touchY,
+          radius: 10,
+          maxRadius: 180,
+          color: ['#D02020', '#1040C0', '#F0C020', '#121212'][Math.floor(Math.random() * 4)],
+          lineWidth: 4,
+          shape: Math.random() > 0.5 ? 'circle' : 'square'
+        });
+
+        for (let i = 0; i < 10; i++) {
+          const ang = (i * Math.PI * 2) / 10 + Math.random() * 0.2;
+          const spd = 3 + Math.random() * 3;
+          burstParticles.push({
+            x: touchX,
+            y: touchY,
+            vx: Math.cos(ang) * spd,
+            vy: Math.sin(ang) * spd,
+            size: 6 + Math.random() * 6,
+            color: ['#D02020', '#1040C0', '#F0C020', '#121212'][i % 4],
+            life: 30
+          });
+        }
+        setJumps((prev) => prev + 1);
+      }
+    };
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('click', handleClick);
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -395,6 +434,7 @@ export function CosmicGatewayCanvas() {
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
       canvas.removeEventListener('click', handleClick);
+      canvas.removeEventListener('touchstart', handleTouchStart);
     };
   }, [warpSpeed]);
 

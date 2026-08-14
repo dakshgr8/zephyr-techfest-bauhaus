@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export function CosmicGatewayCanvas() {
   const canvasRef = useRef(null);
-  const [warpStatus, setWarpStatus] = useState("COSMIC GATEWAY: OPTIMAL");
-  const [warpSpeed, setWarpSpeed] = useState(1); // 1 = Normal, 2 = Hyper
+  const [warpStatus, setWarpStatus] = useState("COSMIC GATEWAY: ACTIVE");
   const [jumps, setJumps] = useState(25);
 
   useEffect(() => {
@@ -59,7 +58,7 @@ export function CosmicGatewayCanvas() {
       // Scatter 12 Geometric Particles
       for (let i = 0; i < 12; i++) {
         const ang = (i * Math.PI * 2) / 12 + Math.random() * 0.2;
-        const spd = 3 + Math.random() * 4;
+        const spd = 3 + Math.random() * 3.5;
         burstParticles.push({
           x: clickX,
           y: clickY,
@@ -73,18 +72,55 @@ export function CosmicGatewayCanvas() {
 
       setJumps((prev) => prev + 1);
       const warpPhrases = [
-        "PORTAL PULSE: 2025.TCET // ACTIVE",
-        "DIMENSIONAL WARP // SYNCHRONIZED",
+        "PORTAL PULSE: 2025.TCET // SYNCHRONIZED",
+        "DIMENSIONAL MATRIX // ALIGNED",
         "SPECTRUM OF INNOVATION // LOCKED",
-        "GATEWAY FLUX // MAXIMUM",
+        "GATEWAY FLUX // OPTIMAL",
         "TIME JUMP // SUCCESSFUL"
       ];
       setWarpStatus(warpPhrases[Math.floor(Math.random() * warpPhrases.length)]);
     };
 
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches[0]) {
+        const rect = canvas.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - rect.left;
+        const touchY = e.touches[0].clientY - rect.top;
+        mouse.x = touchX;
+        mouse.y = touchY;
+        mouse.active = true;
+
+        shockwaves.push({
+          x: touchX,
+          y: touchY,
+          radius: 10,
+          maxRadius: 180,
+          color: ['#D02020', '#1040C0', '#F0C020', '#121212'][Math.floor(Math.random() * 4)],
+          lineWidth: 4,
+          shape: Math.random() > 0.5 ? 'circle' : 'square'
+        });
+
+        for (let i = 0; i < 10; i++) {
+          const ang = (i * Math.PI * 2) / 10 + Math.random() * 0.2;
+          const spd = 3 + Math.random() * 3;
+          burstParticles.push({
+            x: touchX,
+            y: touchY,
+            vx: Math.cos(ang) * spd,
+            vy: Math.sin(ang) * spd,
+            size: 6 + Math.random() * 6,
+            color: ['#D02020', '#1040C0', '#F0C020', '#121212'][i % 4],
+            life: 30
+          });
+        }
+        setJumps((prev) => prev + 1);
+      }
+    };
+
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseleave', handleMouseLeave);
     canvas.addEventListener('click', handleClick);
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
 
     // Doodles (Cosmonaut, Robot, Rocket, Laptop, Circuit, Satellite, Atom, Code)
     const floatingDoodles = Array.from({ length: 26 }, (_, i) => ({
@@ -93,12 +129,12 @@ export function CosmicGatewayCanvas() {
       vx: (Math.random() - 0.5) * 0.6,
       vy: (Math.random() - 0.5) * 0.5,
       rot: Math.random() * Math.PI * 2,
-      vRot: (Math.random() - 0.5) * 0.02,
+      vRot: (Math.random() - 0.5) * 0.016,
       type: ['cosmonaut', 'robot', 'rocket', 'laptop', 'code', 'satellite', 'atom', 'star'][i % 8],
       color: ['#D02020', '#1040C0', '#F0C020', '#121212'][i % 4],
       size: 22 + Math.random() * 20,
       orbitRadius: 90 + Math.random() * 240,
-      orbitSpeed: (Math.random() > 0.5 ? 1 : -1) * (0.003 + Math.random() * 0.005),
+      orbitSpeed: (Math.random() > 0.5 ? 1 : -1) * (0.0035 + Math.random() * 0.005),
       orbitAngle: Math.random() * Math.PI * 2
     }));
 
@@ -113,9 +149,11 @@ export function CosmicGatewayCanvas() {
       beamAngle: 0
     };
 
+    // Perfect Natural Normal Speed (Balanced & Smooth)
+    const speedMultiplier = 1.35;
+
     const render = () => {
       tick++;
-      const speedMultiplier = warpSpeed === 2 ? 2.2 : 1;
       ctx.clearRect(0, 0, width, height);
 
       portal.x = width > 1024 ? width * 0.76 : width * 0.5;
@@ -125,9 +163,9 @@ export function CosmicGatewayCanvas() {
       const cy = portal.y;
 
       portal.rot1 += 0.007 * speedMultiplier;
-      portal.rot2 -= 0.01 * speedMultiplier;
-      portal.rot3 += 0.014 * speedMultiplier;
-      portal.beamAngle += 0.005 * speedMultiplier;
+      portal.rot2 -= 0.009 * speedMultiplier;
+      portal.rot3 += 0.012 * speedMultiplier;
+      portal.beamAngle += 0.004 * speedMultiplier;
 
       // --- 1. SPECTRUM LIGHT PRISM BEAMS (Radiating from the Gateway) ---
       ctx.save();
@@ -214,7 +252,7 @@ export function CosmicGatewayCanvas() {
       ctx.stroke();
 
       // Pulsing Core Glyph
-      const pulse = 1 + Math.sin(tick * 0.06 * speedMultiplier) * 0.08;
+      const pulse = 1 + Math.sin(tick * 0.05 * speedMultiplier) * 0.08;
       ctx.fillStyle = '#FFFFFF';
       ctx.beginPath();
       ctx.arc(0, 0, portal.baseRadius * 0.26 * pulse, 0, Math.PI * 2);
@@ -387,46 +425,7 @@ export function CosmicGatewayCanvas() {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    const handleTouchStart = (e) => {
-      if (e.touches && e.touches[0]) {
-        const rect = canvas.getBoundingClientRect();
-        const touchX = e.touches[0].clientX - rect.left;
-        const touchY = e.touches[0].clientY - rect.top;
-        mouse.x = touchX;
-        mouse.y = touchY;
-        mouse.active = true;
-
-        shockwaves.push({
-          x: touchX,
-          y: touchY,
-          radius: 10,
-          maxRadius: 180,
-          color: ['#D02020', '#1040C0', '#F0C020', '#121212'][Math.floor(Math.random() * 4)],
-          lineWidth: 4,
-          shape: Math.random() > 0.5 ? 'circle' : 'square'
-        });
-
-        for (let i = 0; i < 10; i++) {
-          const ang = (i * Math.PI * 2) / 10 + Math.random() * 0.2;
-          const spd = 3 + Math.random() * 3;
-          burstParticles.push({
-            x: touchX,
-            y: touchY,
-            vx: Math.cos(ang) * spd,
-            vy: Math.sin(ang) * spd,
-            size: 6 + Math.random() * 6,
-            color: ['#D02020', '#1040C0', '#F0C020', '#121212'][i % 4],
-            life: 30
-          });
-        }
-        setJumps((prev) => prev + 1);
-      }
-    };
-
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
-    canvas.addEventListener('click', handleClick);
-    canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
+    render();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -436,7 +435,7 @@ export function CosmicGatewayCanvas() {
       canvas.removeEventListener('click', handleClick);
       canvas.removeEventListener('touchstart', handleTouchStart);
     };
-  }, [warpSpeed]);
+  }, []);
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-auto overflow-hidden">
@@ -446,30 +445,16 @@ export function CosmicGatewayCanvas() {
         title="Interactive Cosmic Gateway: Click anywhere to pulse dimensional shockwaves!"
       />
 
-      {/* Top Right Live Telemetry Badge with Interactive Speed Toggle */}
-      <div className="absolute top-4 right-4 z-20 hidden sm:flex items-center gap-3 bg-white border-3 border-black shadow-[4px_4px_0px_0px_black] px-3.5 py-2 font-mono text-xs select-none pointer-events-auto">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#D02020] animate-ping" />
-          <span className="font-black text-[#121212] uppercase tracking-wider">{warpStatus}</span>
-        </div>
-
-        <div className="border-l-2 border-black pl-3 flex items-center gap-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setWarpSpeed(warpSpeed === 1 ? 2 : 1);
-            }}
-            className={`px-2 py-0.5 border border-black font-black text-[10px] uppercase transition-colors ${
-              warpSpeed === 2 ? 'bg-[#D02020] text-white shadow-[1px_1px_0px_0px_black]' : 'bg-[#F0C020] text-black'
-            }`}
-          >
-            {warpSpeed === 2 ? '⚡ HYPER-WARP [2X]' : 'WARP [1X]'}
-          </button>
-          <span className="font-bold text-[11px] text-[#121212]/60">#{jumps}</span>
-        </div>
+      {/* Top Right Live Telemetry Badge (Clean & Decluttered) */}
+      <div className="absolute top-4 right-4 z-20 hidden sm:flex items-center gap-2.5 bg-white border-3 border-black shadow-[3px_3px_0px_0px_black] px-3.5 py-1.5 font-mono text-xs select-none pointer-events-none">
+        <span className="w-2.5 h-2.5 rounded-full bg-[#D02020] animate-ping" />
+        <span className="font-black text-[#121212] uppercase tracking-wider">{warpStatus}</span>
+        <span className="bg-[#F0C020] text-black px-1.5 py-0.5 border border-black font-bold text-[10px]">
+          SYNC #{jumps}
+        </span>
       </div>
 
-      {/* Subtle Coordinate Crosshair Badge in Bottom Left */}
+      {/* Coordinate Crosshair Badge in Bottom Left */}
       <div className="absolute bottom-10 left-6 z-20 hidden lg:flex items-center gap-2 font-mono text-[10px] font-bold text-[#121212]/60 uppercase pointer-events-none">
         <span>TCET COORDINATES: 19.2084° N, 72.8719° E</span>
         <span>•</span>

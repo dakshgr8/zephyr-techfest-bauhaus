@@ -48,24 +48,24 @@ export function CosmicGatewayCanvas() {
         x: x,
         y: y,
         radius: 8,
-        maxRadius: mobile ? 110 : 180,
+        maxRadius: mobile ? 130 : 180,
         color: ['#D02020', '#1040C0', '#F0C020', '#121212'][Math.floor(Math.random() * 4)],
         lineWidth: mobile ? 3 : 4,
         shape: Math.random() > 0.5 ? 'circle' : 'square'
       });
 
-      const particleCount = mobile ? 6 : 12;
+      const particleCount = mobile ? 8 : 12;
       for (let i = 0; i < particleCount; i++) {
         const ang = (i * Math.PI * 2) / particleCount + Math.random() * 0.2;
-        const spd = (mobile ? 2.5 : 3.5) + Math.random() * 3;
+        const spd = 3 + Math.random() * 3.5;
         burstParticles.push({
           x: x,
           y: y,
           vx: Math.cos(ang) * spd,
           vy: Math.sin(ang) * spd,
-          size: (mobile ? 4 : 6) + Math.random() * 6,
+          size: (mobile ? 5 : 6) + Math.random() * 6,
           color: ['#D02020', '#1040C0', '#F0C020', '#121212'][i % 4],
-          life: mobile ? 24 : 35
+          life: 32
         });
       }
 
@@ -102,8 +102,8 @@ export function CosmicGatewayCanvas() {
     canvas.addEventListener('click', handleClick);
     canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
 
-    // Doodles list (adaptive count based on screen width to prevent clutter)
-    const floatingDoodles = Array.from({ length: 24 }, (_, i) => ({
+    // Floating Doodles (Balanced set)
+    const floatingDoodles = Array.from({ length: 22 }, (_, i) => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.5,
@@ -112,8 +112,8 @@ export function CosmicGatewayCanvas() {
       vRot: (Math.random() - 0.5) * 0.015,
       type: ['cosmonaut', 'robot', 'rocket', 'laptop', 'code', 'satellite', 'atom', 'star'][i % 8],
       color: ['#D02020', '#1040C0', '#F0C020', '#121212'][i % 4],
-      size: 16 + Math.random() * 16,
-      orbitRadius: 70 + Math.random() * 200,
+      size: 18 + Math.random() * 16,
+      orbitRadius: 80 + Math.random() * 220,
       orbitSpeed: (Math.random() > 0.5 ? 1 : -1) * (0.0035 + Math.random() * 0.004),
       orbitAngle: Math.random() * Math.PI * 2
     }));
@@ -138,17 +138,17 @@ export function CosmicGatewayCanvas() {
       const mobile = isMobile();
       const tablet = isTablet();
 
-      // Responsive Portal Positioning:
-      // On mobile: place the portal cleanly at the bottom right/center below text (height - 110px) with smaller radius
-      // On desktop: place on the right half (width * 0.76)
+      // Perfectly Proportioned Portal Positioning:
+      // Mobile: Centered in the middle-upper focal zone with calibrated radius (65px)
+      // Desktop: Anchored on the right half (width * 0.76) with full radius (115px)
       if (mobile) {
         portal.x = width * 0.5;
-        portal.y = height - 105;
-        portal.baseRadius = 48; // compact & elegant on mobile
+        portal.y = height * 0.46;
+        portal.baseRadius = 66;
       } else if (tablet) {
         portal.x = width * 0.74;
         portal.y = height * 0.44;
-        portal.baseRadius = 82;
+        portal.baseRadius = 88;
       } else {
         portal.x = width * 0.76;
         portal.y = height * 0.48;
@@ -169,10 +169,10 @@ export function CosmicGatewayCanvas() {
       ctx.rotate(portal.beamAngle);
       for (let b = 0; b < 6; b++) {
         const bAng = (b * Math.PI * 2) / 6;
-        ctx.fillStyle = ['rgba(208, 32, 32, 0.07)', 'rgba(16, 64, 192, 0.07)', 'rgba(240, 192, 32, 0.07)'][b % 3];
+        ctx.fillStyle = ['rgba(208, 32, 32, 0.06)', 'rgba(16, 64, 192, 0.06)', 'rgba(240, 192, 32, 0.06)'][b % 3];
         ctx.beginPath();
         ctx.moveTo(0, 0);
-        ctx.arc(0, 0, portal.baseRadius * (mobile ? 2.2 : 2.8), bAng - 0.2, bAng + 0.2);
+        ctx.arc(0, 0, portal.baseRadius * 2.6, bAng - 0.2, bAng + 0.2);
         ctx.closePath();
         ctx.fill();
       }
@@ -186,8 +186,8 @@ export function CosmicGatewayCanvas() {
 
       ctx.strokeStyle = '#121212';
       ctx.fillStyle = '#F0C020';
-      ctx.lineWidth = mobile ? 2.5 : 4;
-      const dialOffset = mobile ? 16 : 32;
+      ctx.lineWidth = mobile ? 3 : 4;
+      const dialOffset = mobile ? 22 : 32;
       ctx.beginPath();
       ctx.arc(0, 0, portal.baseRadius + dialOffset, 0, Math.PI * 2);
       ctx.stroke();
@@ -196,10 +196,10 @@ export function CosmicGatewayCanvas() {
       for (let i = 0; i < tickCount; i++) {
         const ang = (i * Math.PI * 2) / tickCount;
         ctx.strokeStyle = '#121212';
-        ctx.lineWidth = i % 4 === 0 ? (mobile ? 2.5 : 4) : 1.5;
+        ctx.lineWidth = i % 4 === 0 ? (mobile ? 3 : 4) : 1.5;
         ctx.beginPath();
         ctx.moveTo(Math.cos(ang) * (portal.baseRadius + dialOffset - 8), Math.sin(ang) * (portal.baseRadius + dialOffset - 8));
-        ctx.lineTo(Math.cos(ang) * (portal.baseRadius + dialOffset + (mobile ? 4 : 6)), Math.sin(ang) * (portal.baseRadius + dialOffset + (mobile ? 4 : 6)));
+        ctx.lineTo(Math.cos(ang) * (portal.baseRadius + dialOffset + (mobile ? 5 : 6)), Math.sin(ang) * (portal.baseRadius + dialOffset + (mobile ? 5 : 6)));
         ctx.stroke();
       }
       ctx.restore();
@@ -210,9 +210,9 @@ export function CosmicGatewayCanvas() {
       ctx.rotate(portal.rot2);
       ctx.strokeStyle = '#1040C0';
       ctx.lineWidth = mobile ? 2.5 : 3.5;
-      ctx.setLineDash([mobile ? 5 : 8, mobile ? 5 : 8]);
+      ctx.setLineDash([mobile ? 6 : 8, mobile ? 6 : 8]);
       ctx.beginPath();
-      ctx.arc(0, 0, portal.baseRadius + (mobile ? 8 : 14), 0, Math.PI * 2);
+      ctx.arc(0, 0, portal.baseRadius + (mobile ? 10 : 14), 0, Math.PI * 2);
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.restore();
@@ -223,7 +223,7 @@ export function CosmicGatewayCanvas() {
       ctx.rotate(portal.rot3);
       ctx.strokeStyle = '#121212';
       ctx.fillStyle = '#D02020';
-      ctx.lineWidth = mobile ? 2.5 : 4;
+      ctx.lineWidth = mobile ? 3 : 4;
       const sqSize = portal.baseRadius * 1.05;
       ctx.fillRect(-sqSize / 2, -sqSize / 2, sqSize, sqSize);
       ctx.strokeRect(-sqSize / 2, -sqSize / 2, sqSize, sqSize);
@@ -243,7 +243,7 @@ export function CosmicGatewayCanvas() {
       ctx.translate(cx, cy);
       ctx.fillStyle = '#1040C0';
       ctx.strokeStyle = '#121212';
-      ctx.lineWidth = mobile ? 2.5 : 4;
+      ctx.lineWidth = mobile ? 3 : 4;
       ctx.beginPath();
       ctx.arc(0, 0, portal.baseRadius * 0.44, 0, Math.PI * 2);
       ctx.fill();
@@ -258,18 +258,17 @@ export function CosmicGatewayCanvas() {
       ctx.stroke();
 
       ctx.fillStyle = '#121212';
-      ctx.font = `900 ${mobile ? '10px' : '13px'} Outfit, monospace`;
+      ctx.font = `900 ${mobile ? '11px' : '13px'} Outfit, monospace`;
       ctx.textAlign = 'center';
-      ctx.fillText("2025", 0, mobile ? 3.5 : 5);
+      ctx.fillText("2025", 0, mobile ? 4 : 5);
       ctx.restore();
 
       // --- 3. ORBITING DOODLES ---
-      // On mobile, render only a clean subset of 10 doodles to prevent visual clutter
-      const activeDoodles = mobile ? floatingDoodles.slice(0, 10) : floatingDoodles;
+      const activeDoodles = mobile ? floatingDoodles.slice(0, 14) : floatingDoodles;
 
       activeDoodles.forEach((d) => {
         d.orbitAngle += d.orbitSpeed * speedMultiplier;
-        const currentRadius = mobile ? d.orbitRadius * 0.65 : d.orbitRadius;
+        const currentRadius = mobile ? d.orbitRadius * 0.72 : d.orbitRadius;
         const targetX = cx + Math.cos(d.orbitAngle) * currentRadius;
         const targetY = cy + Math.sin(d.orbitAngle) * (currentRadius * 0.68);
 
@@ -282,7 +281,7 @@ export function CosmicGatewayCanvas() {
           const dx = mouse.x - d.x;
           const dy = mouse.y - d.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < (mobile ? 110 : 180)) {
+          if (dist < (mobile ? 130 : 180)) {
             d.x += dx * 0.02;
             d.y += dy * 0.02;
             ctx.strokeStyle = '#121212';
@@ -303,7 +302,7 @@ export function CosmicGatewayCanvas() {
         ctx.fillStyle = d.color;
         ctx.lineWidth = mobile ? 2 : 2.5;
 
-        const scale = mobile ? 0.75 : 1;
+        const scale = mobile ? 0.85 : 1;
 
         if (d.type === 'cosmonaut') {
           ctx.scale(scale, scale);
@@ -360,7 +359,7 @@ export function CosmicGatewayCanvas() {
           ctx.fillStyle = '#121212';
           ctx.fillRect(-12, 6, 24, 5);
         } else if (d.type === 'code') {
-          ctx.font = `bold ${mobile ? '11px' : '14px'} monospace`;
+          ctx.font = `bold ${mobile ? '12px' : '14px'} monospace`;
           ctx.fillStyle = d.color;
           ctx.fillText("</>", -10, 4);
         } else if (d.type === 'satellite') {
@@ -396,7 +395,7 @@ export function CosmicGatewayCanvas() {
       // --- 4. SHOCKWAVES & BURST PARTICLES ---
       for (let i = shockwaves.length - 1; i >= 0; i--) {
         const sw = shockwaves[i];
-        sw.radius += (mobile ? 4 : 6) * speedMultiplier;
+        sw.radius += (mobile ? 5 : 6) * speedMultiplier;
         ctx.strokeStyle = sw.color;
         ctx.lineWidth = sw.lineWidth;
         ctx.beginPath();
@@ -451,7 +450,7 @@ export function CosmicGatewayCanvas() {
         title="Interactive Cosmic Gateway: Tap anywhere to pulse dimensional shockwaves!"
       />
 
-      {/* Top Right Telemetry Badge (Compact on Mobile) */}
+      {/* Top Right Telemetry Badge */}
       <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-2 bg-white border-2 sm:border-3 border-black shadow-[2px_2px_0px_0px_black] sm:shadow-[3px_3px_0px_0px_black] px-2.5 sm:px-3.5 py-1 sm:py-1.5 font-mono text-[10px] sm:text-xs select-none pointer-events-none">
         <span className="w-2 h-2 rounded-full bg-[#D02020] animate-ping shrink-0" />
         <span className="font-black text-[#121212] uppercase tracking-wider hidden sm:inline">

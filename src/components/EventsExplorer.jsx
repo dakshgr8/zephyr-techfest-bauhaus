@@ -3,7 +3,7 @@ import { ALL_EVENTS, CATEGORIES, filterAndSearchEvents } from '../data/events';
 import { COMMITTEES_DATA } from '../data/committees';
 import { EventCard } from './EventCard';
 import { EventModal } from './EventModal';
-import { Search, X, RotateCcw, Check } from 'lucide-react';
+import { Search, X, RotateCcw, Filter } from 'lucide-react';
 
 export function EventsExplorer({ onShowToast }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,7 +54,7 @@ export function EventsExplorer({ onShowToast }) {
   return (
     <section
       id="events"
-      className="py-8 sm:py-16 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8 sm:space-y-12"
+      className="py-8 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8 sm:space-y-12"
     >
       {/* Header & Counter */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E2DCD2] pb-6 sm:pb-8">
@@ -68,17 +68,17 @@ export function EventsExplorer({ onShowToast }) {
           </h1>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 font-body text-xs">
-          <div className="px-3 py-1 bg-[#F3EFE8] border border-[#E2DCD2] text-[#1C1C1C] tracking-wider uppercase text-[10px] sm:text-[11px]">
+        <div className="flex items-center gap-2.5 font-body text-xs">
+          <div className="px-3 py-1.5 bg-[#F3EFE8] border border-[#E2DCD2] text-[#1C1C1C] tracking-wider uppercase text-[11px]">
             {filteredEvents.length} OF 67 EVENTS
           </div>
 
           {hasActiveFilters && (
             <button
               onClick={resetFilters}
-              className="px-2.5 py-1 bg-transparent hover:bg-[#F3EFE8] border border-[#E2DCD2] text-[#9E7438] transition-colors flex items-center gap-1 text-[10px] sm:text-[11px] uppercase tracking-wider"
+              className="px-3 py-1.5 bg-transparent hover:bg-[#F3EFE8] border border-[#E2DCD2] text-[#9E7438] transition-colors flex items-center gap-1.5 text-[11px] uppercase tracking-wider"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset</span>
             </button>
           )}
@@ -86,9 +86,9 @@ export function EventsExplorer({ onShowToast }) {
       </div>
 
       {/* Filter Matrix */}
-      <div className="gallery-card p-4 sm:p-8 space-y-5 sm:space-y-6">
+      <div className="gallery-card p-4 sm:p-8 space-y-4 sm:space-y-6">
         
-        {/* Search Input */}
+        {/* Search Bar */}
         <div className="relative">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B6862]" />
           <input
@@ -109,91 +109,84 @@ export function EventsExplorer({ onShowToast }) {
           )}
         </div>
 
-        {/* Committee Chips with Horizontal Scroll on Mobile */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-body font-medium text-[#6B6862] uppercase tracking-[0.2em]">
-            <span>Chapters ({COMMITTEES_DATA.length})</span>
-            <span className="sm:hidden text-[#9E7438]">Swipe →</span>
+        {/* Mobile Dropdowns / Desktop Chips Filter Controls */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-[#E2DCD2]">
+          
+          {/* Chapter Filter */}
+          <div className="space-y-1">
+            <label className="text-[10px] font-body font-medium text-[#6B6862] uppercase tracking-[0.2em] block">
+              Chapter
+            </label>
+            <select
+              value={selectedCommittee}
+              onChange={(e) => setSelectedCommittee(e.target.value)}
+              className="w-full px-3 py-2 bg-[#FAF7F2] border border-[#E2DCD2] text-xs sm:text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all uppercase tracking-wider"
+            >
+              <option value="ALL">All 11 Chapters ({ALL_EVENTS.length})</option>
+              {COMMITTEES_DATA.filter((c) => c.id !== 'ALL').map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name} ({ALL_EVENTS.filter((e) => e.committee === c.id).length})
+                </option>
+              ))}
+            </select>
           </div>
 
-          <div className="flex flex-nowrap overflow-x-auto pb-1.5 -mx-1 px-1 sm:flex-wrap gap-1.5 scrollbar-none">
+          {/* Category Filter */}
+          <div className="space-y-1">
+            <label className="text-[10px] font-body font-medium text-[#6B6862] uppercase tracking-[0.2em] block">
+              Category
+            </label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-3 py-2 bg-[#FAF7F2] border border-[#E2DCD2] text-xs sm:text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all uppercase tracking-wider"
+            >
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat === 'All' ? 'All Categories' : cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Fee Filter */}
+          <div className="space-y-1">
+            <label className="text-[10px] font-body font-medium text-[#6B6862] uppercase tracking-[0.2em] block">
+              Fee Type
+            </label>
+            <select
+              value={priceFilter}
+              onChange={(e) => setPriceFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-[#FAF7F2] border border-[#E2DCD2] text-xs sm:text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all uppercase tracking-wider"
+            >
+              <option value="all">All Fees (Free & Paid)</option>
+              <option value="free">Free Events Only</option>
+              <option value="paid">Paid Events Only</option>
+            </select>
+          </div>
+
+        </div>
+
+        {/* Desktop Quick Chapter Pills (Shown on tablet/desktop for rapid filtering) */}
+        <div className="hidden md:block pt-3 border-t border-[#E2DCD2]/60">
+          <div className="flex flex-wrap gap-1.5">
             {COMMITTEES_DATA.map((comm) => {
               const isSelected = selectedCommittee === comm.id;
               return (
                 <button
                   key={comm.id}
                   onClick={() => setSelectedCommittee(comm.id)}
-                  className={`px-3 py-1.5 text-[10px] sm:text-[11px] font-body uppercase tracking-wider whitespace-nowrap transition-all duration-200 flex items-center gap-1 shrink-0 ${
+                  className={`px-2.5 py-1 text-[11px] font-body uppercase tracking-wider transition-all ${
                     isSelected
                       ? 'bg-[#1C1C1C] text-white font-medium'
                       : 'bg-[#FAF7F2] text-[#6B6862] hover:bg-[#EBE5DC] border border-[#E2DCD2]'
                   }`}
                 >
-                  <span>{comm.name}</span>
-                  {isSelected && <Check className="w-3 h-3 text-[#9E7438]" />}
+                  {comm.name}
                 </button>
               );
             })}
           </div>
-        </div>
-
-        {/* Category & Fee Tabs */}
-        <div className="pt-3.5 border-t border-[#E2DCD2] grid grid-cols-1 md:grid-cols-2 gap-4">
-          
-          {/* Categories */}
-          <div className="space-y-1.5">
-            <span className="text-[9px] sm:text-[10px] font-body font-medium text-[#6B6862] uppercase tracking-[0.2em] block">
-              Categories
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {CATEGORIES.map((cat) => {
-                const isSelected = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-2.5 py-1 text-[10px] sm:text-[11px] font-body uppercase tracking-wider transition-all ${
-                      isSelected
-                        ? 'bg-[#9E7438] text-white font-medium'
-                        : 'bg-[#FAF7F2] text-[#6B6862] hover:bg-[#EBE5DC] border border-[#E2DCD2]'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Fee Type */}
-          <div className="space-y-1.5">
-            <span className="text-[9px] sm:text-[10px] font-body font-medium text-[#6B6862] uppercase tracking-[0.2em] block">
-              Fee Type
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {[
-                { id: 'all', label: 'All' },
-                { id: 'free', label: 'Free' },
-                { id: 'paid', label: 'Paid' },
-              ].map((p) => {
-                const isSelected = priceFilter === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    onClick={() => setPriceFilter(p.id)}
-                    className={`px-3 py-1 text-[10px] sm:text-[11px] font-body uppercase tracking-wider transition-all ${
-                      isSelected
-                        ? 'bg-[#1C1C1C] text-white font-medium'
-                        : 'bg-[#FAF7F2] text-[#6B6862] hover:bg-[#EBE5DC] border border-[#E2DCD2]'
-                    }`}
-                  >
-                    {p.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
         </div>
 
       </div>
@@ -212,7 +205,7 @@ export function EventsExplorer({ onShowToast }) {
       ) : (
         <div className="text-center py-12 px-4 gallery-card space-y-3 max-w-lg mx-auto">
           <div className="w-8 h-8 bg-[#FAF7F2] border border-[#E2DCD2] flex items-center justify-center mx-auto text-[#6B6862]">
-            <Search className="w-4 h-4" />
+            <Filter className="w-4 h-4" />
           </div>
 
           <div className="space-y-1">
@@ -220,7 +213,7 @@ export function EventsExplorer({ onShowToast }) {
               No Events Found
             </h3>
             <p className="font-body text-xs text-[#6B6862]">
-              No events match "{searchQuery}" under the selected filters.
+              No events match your current filter selections.
             </p>
           </div>
 

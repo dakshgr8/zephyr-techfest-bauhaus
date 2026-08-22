@@ -26,11 +26,12 @@ export function InteractiveWordmark({ onLetterSelect }) {
     });
   }, []);
 
-  // Play video on hover / touch
+  // Play video on hover / touch from start
   const handleLetterEnter = (id) => {
     setActiveLetter(id);
     const video = videoRefs.current[id];
     if (video) {
+      video.currentTime = 0;
       video.play().catch(() => {});
     }
     if (onLetterSelect) {
@@ -38,7 +39,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
     }
   };
 
-  // Pause video on leave
+  // Pause video and rewind to start frame on leave
   const handleLetterLeave = (id) => {
     if (activeLetter === id) {
       setActiveLetter(null);
@@ -46,6 +47,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
     const video = videoRefs.current[id];
     if (video) {
       video.pause();
+      video.currentTime = 0;
     }
   };
 
@@ -54,10 +56,12 @@ export function InteractiveWordmark({ onLetterSelect }) {
     const video = videoRefs.current[id];
     if (video) {
       if (video.paused) {
+        video.currentTime = 0;
         video.play().catch(() => {});
         setActiveLetter(id);
       } else {
         video.pause();
+        video.currentTime = 0;
         setActiveLetter(null);
       }
     }

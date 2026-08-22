@@ -7,7 +7,6 @@ import { SchedulePage } from './pages/SchedulePage';
 import { ContactPage } from './pages/ContactPage';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
-import { GalleryLight } from './components/GalleryLight';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
@@ -74,19 +73,16 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#1C1C1C] flex flex-col font-body selection:bg-[#9E7438] selection:text-white relative overflow-x-hidden">
-      {/* 1. Ambient Gallery Track Light & Tactile Paper Grain */}
-      <GalleryLight />
-
-      {/* 2. Thin Accent Scroll Progress Bar */}
+      {/* 1. Thin Accent Scroll Progress Bar */}
       <div
         className="scroll-progress-bar"
         style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* 3. Header Navigation */}
+      {/* 2. Header Navigation */}
       <Navbar currentPage={currentPage} onNavigate={navigateToPage} />
 
-      {/* 4. Dynamic Page Rendering */}
+      {/* 3. Dynamic Page Rendering */}
       <div className="flex-grow relative z-10">
         {currentPage === 'home' && (
           <HomePage onNavigate={navigateToPage} />
@@ -109,10 +105,10 @@ export default function App() {
         )}
       </div>
 
-      {/* 5. Footer */}
+      {/* 4. Footer */}
       <Footer onNavigate={navigateToPage} />
 
-      {/* 6. Feedback Toast */}
+      {/* 5. Feedback Toast */}
       {toastMessage && (
         <Toast
           message={toastMessage}

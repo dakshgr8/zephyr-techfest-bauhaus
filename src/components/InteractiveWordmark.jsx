@@ -14,8 +14,9 @@ export function InteractiveWordmark({ onLetterSelect }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const videoRefs = useRef({});
   const containerRef = useRef(null);
+  const mobileVideoRef = useRef(null);
 
-  // Initialize all videos for infinite seamless looping
+  // Initialize all desktop videos
   useEffect(() => {
     Object.values(videoRefs.current).forEach((video) => {
       if (video) {
@@ -24,6 +25,13 @@ export function InteractiveWordmark({ onLetterSelect }) {
         video.loop = true;
       }
     });
+
+    if (mobileVideoRef.current) {
+      mobileVideoRef.current.muted = true;
+      mobileVideoRef.current.playsInline = true;
+      mobileVideoRef.current.loop = true;
+      mobileVideoRef.current.play().catch(() => {});
+    }
   }, []);
 
   // Play video on hover / touch from start
@@ -99,15 +107,35 @@ export function InteractiveWordmark({ onLetterSelect }) {
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleContainerLeave}
-        className="relative w-full max-w-5xl mx-auto px-1 sm:px-4 py-1 sm:py-2 transition-transform duration-500 ease-out"
+        className="relative w-full max-w-5xl mx-auto px-2 sm:px-4 py-1 sm:py-2 transition-transform duration-500 ease-out"
         style={{
           transform: `perspective(1000px) rotateX(${-mousePos.y * 0.3}deg) rotateY(${mousePos.x * 0.3}deg)`,
         }}
         role="region"
-        aria-label="Zephyr Interactive Video Wordmark"
+        aria-label="Zephyr Wordmark"
       >
-        {/* Proportional Flex Row for Natural Alignment */}
-        <div className="w-full flex items-center justify-between">
+        
+        {/* ========================================================= */}
+        {/* MOBILE VIEW: Majestic Single Seamless Panoramic Video    */}
+        {/* ========================================================= */}
+        <div className="block sm:hidden w-full aspect-[1800/480] overflow-hidden relative">
+          <video
+            ref={mobileVideoRef}
+            src="/wordmark/zephyr-wordmark-motion.mp4"
+            poster="/wordmark/zephyr-wordmark-poster.jpg"
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="auto"
+            className="w-full h-full object-contain mix-blend-multiply opacity-95 pointer-events-none"
+          />
+        </div>
+
+        {/* ========================================================= */}
+        {/* DESKTOP VIEW: Proportional Interactive Letter Video Grid */}
+        {/* ========================================================= */}
+        <div className="hidden sm:flex w-full items-center justify-between">
           {LETTERS_CONFIG.map((letter) => {
             const isHovered = activeLetter === letter.id;
 
@@ -119,7 +147,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
                 onMouseLeave={() => handleLetterLeave(letter.id)}
                 onTouchStart={() => handleLetterEnter(letter.id)}
                 onClick={() => handleLetterClick(letter.id)}
-                className="group relative flex flex-col items-center justify-center p-0 cursor-pointer focus:outline-none touch-manipulation"
+                className="group relative flex flex-col items-center justify-center p-0 cursor-pointer focus:outline-none"
               >
                 {/* Letter Video Frame */}
                 <div
@@ -145,7 +173,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
 
                 {/* Micro Label */}
                 <span
-                  className={`font-body text-[7.5px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.25em] uppercase mt-1 transition-colors duration-200 truncate max-w-full text-center ${
+                  className={`font-body text-[9px] tracking-[0.25em] uppercase mt-1 transition-colors duration-200 truncate max-w-full text-center ${
                     isHovered ? 'text-[#9E7438] font-medium' : 'text-[#6B6862]'
                   }`}
                 >
@@ -156,13 +184,6 @@ export function InteractiveWordmark({ onLetterSelect }) {
           })}
         </div>
 
-      </div>
-
-      {/* Mobile Interaction Hint */}
-      <div className="sm:hidden text-center mt-1.5">
-        <span className="font-body text-[8.5px] uppercase tracking-[0.2em] text-[#9E7438]">
-          ✦ Tap any letter to animate
-        </span>
       </div>
 
     </div>

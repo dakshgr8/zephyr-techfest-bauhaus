@@ -1,4 +1,5 @@
 import React from 'react';
+import { CelestialCanvas } from './CelestialCanvas';
 import { InteractiveWordmark } from './InteractiveWordmark';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 
@@ -6,8 +7,36 @@ export function Hero({ onExploreEvents }) {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col justify-between pt-28 sm:pt-32 pb-10 px-4 sm:px-6 lg:px-8 bg-transparent border-b border-[#E2DCD2] overflow-hidden select-none"
+      className="relative min-h-screen flex flex-col justify-between pt-28 sm:pt-32 pb-10 px-4 sm:px-6 lg:px-8 bg-[#FAF7F2] border-b border-[#E2DCD2] overflow-hidden select-none"
     >
+      {/* Interactive Astrolabe & Constellation Physics Background */}
+      <CelestialCanvas />
+
+      {/* Subtle Background Corner Coordinate Markings */}
+      <div className="absolute top-20 left-6 hidden md:block pointer-events-none z-0">
+        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-[#9E7438]/50">
+          + 19.2061° N, 72.8737° E
+        </span>
+      </div>
+
+      <div className="absolute top-20 right-6 hidden md:block pointer-events-none z-0">
+        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-[#9E7438]/50">
+          ASTROLABE MATRIX • SEC 01 +
+        </span>
+      </div>
+
+      <div className="absolute bottom-6 left-6 hidden md:block pointer-events-none z-0">
+        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-[#9E7438]/40">
+          + TCET AUTONOMOUS ARCHIVE
+        </span>
+      </div>
+
+      <div className="absolute bottom-6 right-6 hidden md:block pointer-events-none z-0">
+        <span className="font-body text-[9px] uppercase tracking-[0.3em] text-[#9E7438]/40">
+          MUMBAI • MMXXV +
+        </span>
+      </div>
+
       {/* Main Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col items-center text-center space-y-6 sm:space-y-8 my-auto">
         

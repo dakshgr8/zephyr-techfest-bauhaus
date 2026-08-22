@@ -50,16 +50,16 @@ export function ContactSection({ onShowToast }) {
   };
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       
       {/* 1. Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E2DCD2] pb-8">
-        <div className="space-y-1.5">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E2DCD2] pb-6 sm:pb-8">
+        <div className="space-y-1">
           <span className="font-body text-[10px] sm:text-xs font-medium uppercase tracking-[0.25em] text-[#6B6862]">
             COMMUNICATION
           </span>
 
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1C1C1C] tracking-wide uppercase">
+          <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-normal text-[#1C1C1C] tracking-wide uppercase">
             Contact <span className="italic text-[#9E7438]">& Connect</span>
           </h1>
         </div>
@@ -70,11 +70,11 @@ export function ContactSection({ onShowToast }) {
       </div>
 
       {/* 2. Top 3-Column Quick Info Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         
         {/* Card 1: Campus Location */}
-        <div className="gallery-card p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
+        <div className="gallery-card p-5 sm:p-8 flex flex-col justify-between space-y-5 sm:space-y-6">
+          <div className="space-y-3 sm:space-y-4">
             <div className="w-8 h-8 bg-[#FAF7F2] border border-[#E2DCD2] flex items-center justify-center text-[#9E7438]">
               <MapPin className="w-4 h-4" />
             </div>
@@ -83,7 +83,7 @@ export function ContactSection({ onShowToast }) {
               <span className="font-body text-[9px] font-medium text-[#9E7438] uppercase tracking-[0.2em] block">
                 CAMPUS LOCATION
               </span>
-              <h3 className="font-display text-2xl font-medium text-[#1C1C1C]">
+              <h3 className="font-display text-xl sm:text-2xl font-medium text-[#1C1C1C]">
                 TCET Mumbai
               </h3>
             </div>
@@ -93,7 +93,7 @@ export function ContactSection({ onShowToast }) {
             </p>
           </div>
 
-          <div className="pt-4 border-t border-[#E2DCD2]">
+          <div className="pt-3.5 border-t border-[#E2DCD2]">
             <a
               href={CONTACT_INFO.googleMapsUrl}
               target="_blank"
@@ -107,8 +107,8 @@ export function ContactSection({ onShowToast }) {
         </div>
 
         {/* Card 2: Official Desks */}
-        <div className="gallery-card p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
+        <div className="gallery-card p-5 sm:p-8 flex flex-col justify-between space-y-5 sm:space-y-6">
+          <div className="space-y-3 sm:space-y-4">
             <div className="w-8 h-8 bg-[#FAF7F2] border border-[#E2DCD2] flex items-center justify-center text-[#1B3B4B]">
               <Mail className="w-4 h-4" />
             </div>
@@ -117,7 +117,7 @@ export function ContactSection({ onShowToast }) {
               <span className="font-body text-[9px] font-medium text-[#1B3B4B] uppercase tracking-[0.2em] block">
                 EMAIL DIRECTORY
               </span>
-              <h3 className="font-display text-2xl font-medium text-[#1C1C1C]">
+              <h3 className="font-display text-xl sm:text-2xl font-medium text-[#1C1C1C]">
                 Official Desks
               </h3>
             </div>
@@ -137,14 +137,14 @@ export function ContactSection({ onShowToast }) {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#E2DCD2] font-body text-[10px] uppercase tracking-wider text-[#6B6862]">
+          <div className="pt-3.5 border-t border-[#E2DCD2] font-body text-[10px] uppercase tracking-wider text-[#6B6862]">
             Response Time: &lt; 24 Hours
           </div>
         </div>
 
         {/* Card 3: Central Helplines */}
-        <div className="gallery-card p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
+        <div className="gallery-card p-5 sm:p-8 flex flex-col justify-between space-y-5 sm:space-y-6">
+          <div className="space-y-3 sm:space-y-4">
             <div className="w-8 h-8 bg-[#FAF7F2] border border-[#E2DCD2] flex items-center justify-center text-[#2D5A46]">
               <Phone className="w-4 h-4" />
             </div>
@@ -153,7 +153,7 @@ export function ContactSection({ onShowToast }) {
               <span className="font-body text-[9px] font-medium text-[#2D5A46] uppercase tracking-[0.2em] block">
                 DIRECT HELPLINES
               </span>
-              <h3 className="font-display text-2xl font-medium text-[#1C1C1C]">
+              <h3 className="font-display text-xl sm:text-2xl font-medium text-[#1C1C1C]">
                 Student Leads
               </h3>
             </div>
@@ -180,7 +180,7 @@ export function ContactSection({ onShowToast }) {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#E2DCD2] font-body text-[10px] uppercase tracking-wider text-[#6B6862]">
+          <div className="pt-3.5 border-t border-[#E2DCD2] font-body text-[10px] uppercase tracking-wider text-[#6B6862]">
             Operating Hours: 08:00 — 20:00 IST
           </div>
         </div>
@@ -188,11 +188,11 @@ export function ContactSection({ onShowToast }) {
       </div>
 
       {/* 3. Main 2-Column Section: Inquiry Form & Chapter Directory */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
         
         {/* Left: Transmission Form (7 cols) */}
         <div className="lg:col-span-7">
-          <div className="gallery-card p-6 sm:p-10 space-y-6 h-full flex flex-col justify-between">
+          <div className="gallery-card p-5 sm:p-10 space-y-5 sm:space-y-6 h-full flex flex-col justify-between">
             
             <div className="space-y-1">
               <span className="font-body text-[10px] font-medium uppercase tracking-[0.2em] text-[#9E7438]">
@@ -207,7 +207,7 @@ export function ContactSection({ onShowToast }) {
             </div>
 
             {submitted ? (
-              <div className="p-8 bg-[#FAF7F2] border border-[#9E7438] text-center space-y-3 animate-fade-in my-auto">
+              <div className="p-6 sm:p-8 bg-[#FAF7F2] border border-[#9E7438] text-center space-y-3 animate-fade-in my-auto">
                 <div className="w-10 h-10 bg-[#2D5A46]/10 text-[#2D5A46] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
@@ -232,7 +232,7 @@ export function ContactSection({ onShowToast }) {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Your full name"
-                      className="w-full px-4 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
                     />
                   </div>
 
@@ -246,7 +246,7 @@ export function ContactSection({ onShowToast }) {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="Your email address"
-                      className="w-full px-4 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
                     />
                   </div>
                 </div>
@@ -259,7 +259,7 @@ export function ContactSection({ onShowToast }) {
                     <select
                       value={formData.committee}
                       onChange={(e) => setFormData({ ...formData, committee: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
                     >
                       <option value="TSDW">TSDW Central Desk</option>
                       <option value="CSI">CSI</option>
@@ -285,7 +285,7 @@ export function ContactSection({ onShowToast }) {
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       placeholder="Topic of inquiry"
-                      className="w-full px-4 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
                     />
                   </div>
                 </div>
@@ -300,14 +300,14 @@ export function ContactSection({ onShowToast }) {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Write your message..."
-                    className="w-full px-4 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
+                    className="w-full px-3.5 py-2.5 bg-[#FAF7F2] border border-[#E2DCD2] text-sm text-[#1C1C1C] focus:outline-none focus:border-[#9E7438] transition-all"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn-gallery-primary w-full py-3.5 text-xs flex items-center justify-center gap-2"
+                  className="btn-gallery-primary w-full py-3 text-xs flex items-center justify-center gap-2"
                 >
                   {submitting ? (
                     <span>Transmitting...</span>
@@ -327,7 +327,7 @@ export function ContactSection({ onShowToast }) {
 
         {/* Right: Chapter Coordinators Directory (5 cols) */}
         <div className="lg:col-span-5">
-          <div className="gallery-card p-6 sm:p-8 space-y-5 h-full flex flex-col justify-between">
+          <div className="gallery-card p-5 sm:p-8 space-y-4 sm:space-y-5 h-full flex flex-col justify-between">
             
             <div className="space-y-1">
               <span className="font-body text-[10px] font-medium uppercase tracking-[0.2em] text-[#9E7438]">
@@ -341,8 +341,8 @@ export function ContactSection({ onShowToast }) {
               </p>
             </div>
 
-            {/* Scrollable / Structured Helplines List */}
-            <div className="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+            {/* Scrollable Helplines List */}
+            <div className="space-y-2 max-h-[340px] sm:max-h-[380px] overflow-y-auto pr-1">
               {CONTACT_INFO.committeeHelplines.map((c) => (
                 <div
                   key={c.committee}

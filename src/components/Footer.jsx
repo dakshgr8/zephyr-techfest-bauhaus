@@ -20,14 +20,14 @@ export function Footer({ onNavigate }) {
   ];
 
   return (
-    <footer className="relative bg-[#F3EFE8] border-t border-[#E2DCD2] pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-[#1C1C1C]">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <footer className="relative bg-[#F3EFE8] border-t border-[#E2DCD2] pt-12 sm:pt-16 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-8 text-[#1C1C1C]">
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-12">
         
         {/* Top Brand & Directory Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-[#E2DCD2]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-8 sm:pb-12 border-b border-[#E2DCD2]">
           
           {/* Brand Col (5 cols) */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-5 space-y-3 sm:space-y-4">
             <div className="cursor-pointer" onClick={() => onNavigate && onNavigate('home')}>
               <span className="font-display font-medium text-2xl tracking-[0.2em] text-[#1C1C1C] uppercase">
                 ZEPHYR<span className="text-[#9E7438] font-normal text-base ml-2 italic">MMXXV</span>
@@ -41,14 +41,14 @@ export function Footer({ onNavigate }) {
               The flagship interdimensional technical symposium organized by the <strong>TCET Student Development and Welfare Association (TSDW)</strong> at Thakur College of Engineering and Technology, Mumbai.
             </p>
 
-            <div className="font-body text-xs text-[#6B6862] space-y-1 pt-1">
+            <div className="font-body text-xs text-[#6B6862] space-y-0.5 pt-1">
               <div>Thakur Educational Campus, Kandivali East, Mumbai 400101</div>
               <div>Autonomous • NAAC 'A+' Grade • Affiliated to Mumbai University</div>
             </div>
           </div>
 
           {/* Quick Navigation (3 cols) */}
-          <div className="md:col-span-3 space-y-3">
+          <div className="md:col-span-3 space-y-2.5 sm:space-y-3">
             <span className="font-body text-[10px] font-medium uppercase tracking-[0.2em] text-[#9E7438] block">
               Pages
             </span>
@@ -67,7 +67,7 @@ export function Footer({ onNavigate }) {
           </div>
 
           {/* Committee Chapters (4 cols) */}
-          <div className="md:col-span-4 space-y-3">
+          <div className="md:col-span-4 space-y-2.5 sm:space-y-3">
             <span className="font-body text-[10px] font-medium uppercase tracking-[0.2em] text-[#9E7438] block">
               11 Professional Chapters
             </span>
@@ -84,7 +84,7 @@ export function Footer({ onNavigate }) {
             </div>
 
             {/* Social Channels */}
-            <div className="pt-3 space-y-2">
+            <div className="pt-2.5 space-y-1.5">
               <span className="font-body text-[9px] font-medium uppercase tracking-[0.2em] text-[#6B6862] block">
                 Connect With TSDW
               </span>
@@ -107,7 +107,7 @@ export function Footer({ onNavigate }) {
         </div>
 
         {/* Bottom Copyright & Back to Top */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-body text-[11px] text-[#6B6862]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-body text-[10px] sm:text-[11px] text-[#6B6862]">
           <div className="text-center sm:text-left">
             © 2004–2025 Zephyr Techfest & TSDW Council. Thakur College of Engineering and Technology.
           </div>

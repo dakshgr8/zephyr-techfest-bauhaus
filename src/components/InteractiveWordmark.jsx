@@ -99,7 +99,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleContainerLeave}
-        className="relative w-full max-w-5xl mx-auto px-2 sm:px-4 py-2 transition-transform duration-500 ease-out"
+        className="relative w-full max-w-5xl mx-auto px-1 sm:px-4 py-1 sm:py-2 transition-transform duration-500 ease-out"
         style={{
           transform: `perspective(1000px) rotateX(${-mousePos.y * 0.3}deg) rotateY(${mousePos.x * 0.3}deg)`,
         }}
@@ -119,7 +119,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
                 onMouseLeave={() => handleLetterLeave(letter.id)}
                 onTouchStart={() => handleLetterEnter(letter.id)}
                 onClick={() => handleLetterClick(letter.id)}
-                className="group relative flex flex-col items-center justify-center p-0 cursor-pointer focus:outline-none"
+                className="group relative flex flex-col items-center justify-center p-0 cursor-pointer focus:outline-none touch-manipulation"
               >
                 {/* Letter Video Frame */}
                 <div
@@ -145,7 +145,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
 
                 {/* Micro Label */}
                 <span
-                  className={`font-body text-[9px] tracking-[0.25em] uppercase mt-1 transition-colors duration-200 ${
+                  className={`font-body text-[7.5px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.25em] uppercase mt-1 transition-colors duration-200 truncate max-w-full text-center ${
                     isHovered ? 'text-[#9E7438] font-medium' : 'text-[#6B6862]'
                   }`}
                 >
@@ -156,6 +156,13 @@ export function InteractiveWordmark({ onLetterSelect }) {
           })}
         </div>
 
+      </div>
+
+      {/* Mobile Interaction Hint */}
+      <div className="sm:hidden text-center mt-1.5">
+        <span className="font-body text-[8.5px] uppercase tracking-[0.2em] text-[#9E7438]">
+          ✦ Tap any letter to animate
+        </span>
       </div>
 
     </div>

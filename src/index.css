@@ -17,6 +17,11 @@
 
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
+
+    --mouse-x: 50vw;
+    --mouse-y: 30vh;
+    --light-angle-x: 0;
+    --light-angle-y: 0;
   }
 
   * {
@@ -51,20 +56,26 @@
   }
 }
 
-/* Luxury Gallery Card */
+/* Luxury Gallery Card with Dynamic Specular Light */
 .gallery-card {
+  position: relative;
   background-color: var(--card);
   border: 1px solid var(--border);
   border-radius: 0px;
+  box-shadow: 0 1px 2px rgba(28, 28, 28, 0.02),
+              calc(var(--light-angle-x, 0) * -2px) calc(var(--light-angle-y, 0) * -2px) 8px rgba(158, 116, 56, 0.04);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+              background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gallery-card:hover {
   border-color: var(--primary);
   background-color: #FAF7F2;
   transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(158, 116, 56, 0.08),
+              0 2px 6px rgba(28, 28, 28, 0.03);
 }
 
 /* Primary Gallery Button */

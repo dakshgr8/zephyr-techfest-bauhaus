@@ -1,139 +1,154 @@
-import React, { useState } from 'react';
-import { CornerShape } from './Shapes';
+import React from 'react';
+import { BookOpen, Layers, Sparkles } from 'lucide-react';
 
 export function AboutSection() {
-  const [hoveredCard, setHoveredCard] = useState(null);
-
   return (
-    <section id="About" className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-[#F0F0F0] border-b-4 border-black">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section
+      id="about"
+      className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-[#F7F2E9] border-b border-[#E3D9C6]"
+    >
+      <div className="max-w-7xl mx-auto space-y-16">
         
-        {/* Section Header Tag */}
-        <div className="flex items-center gap-3 border-b-4 border-black pb-4">
-          <div className="w-4 h-4 rounded-full bg-[#D02020] border-2 border-black" />
-          <span className="font-mono text-sm font-bold uppercase tracking-widest text-[#121212]">
-            ABOUT // SPECTRUM OF INNOVATION
-          </span>
-        </div>
-
-        {/* 3-Card Grid matching original website layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]">
-          
-          {/* Card 1: Zephyr 2004 History & Time Machine Motif (2 cols) */}
-          <div
-            onMouseEnter={() => setHoveredCard(1)}
-            onMouseLeave={() => setHoveredCard(null)}
-            className="md:col-span-2 bg-white border-4 border-black shadow-[8px_8px_0px_0px_black] p-6 sm:p-10 flex flex-col justify-between relative group hover:-translate-y-1 transition-transform"
-          >
-            <div className="absolute top-4 right-4">
-              <CornerShape index={0} size="w-4 h-4" />
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-bold uppercase px-2.5 py-1 bg-[#D02020] text-white border-2 border-black">
-                  ESTD. 2004
-                </span>
-                <span className="font-mono text-xs font-bold uppercase text-[#121212]/70">
-                  TCET MUMBAI
-                </span>
-              </div>
-
-              <div className="space-y-4 text-base sm:text-lg font-medium text-[#121212] leading-relaxed">
-                <p>
-                  Ever since it was first organized in <strong>2004</strong>, <strong>Zephyr</strong> has been the most awaited event among the students of <strong>Thakur College of Engineering and Technology</strong>. This technical festival aims at providing students with a platform to enhance their technical skills. Each Year with a new edition, Zephyr brings new events such as workshops on in-demand technology and skills along with gaming tournaments and fun events.
-                </p>
-                <p>
-                  The theme of Zephyr'25 is <strong>Spectrum of Innovation</strong>. The time traveler, equipped with knowledge about the time period they wish to visit, steps into the machine. The interior is filled with an array of flashing lights, complex instruments, and a central control panel. After entering the desired date and time into the control panel, the traveler activates the machine.
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-6 mt-6 border-t-2 border-black flex items-center justify-between">
-              <span className="font-black text-xl uppercase tracking-tight text-[#121212]">
-                Cosmic Zephyr Through Intelligence
-              </span>
-              <span className="font-mono text-xs font-bold bg-[#F0C020] text-black px-2 py-0.5 border border-black">
-                2025 EDITION
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E3D9C6] pb-8">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+              <span className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-[#736B60]">
+                GENESIS & PHILOSOPHY
               </span>
             </div>
+
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-[#1A1714] tracking-wide uppercase">
+              About <span className="italic font-editorial text-[#C5A059] lowercase">Zephyr</span>
+            </h2>
           </div>
 
-          {/* Card 2: Where Ideas Ignite (1 col) */}
-          <div
-            onMouseEnter={() => setHoveredCard(2)}
-            onMouseLeave={() => setHoveredCard(null)}
-            className="md:col-span-1 bg-[#1040C0] text-white border-4 border-black shadow-[8px_8px_0px_0px_black] p-6 sm:p-8 flex flex-col justify-between relative group hover:-translate-y-1 transition-transform"
-          >
-            <div className="absolute top-4 right-4">
-              <CornerShape index={1} size="w-4 h-4" />
-            </div>
+          <p className="max-w-md font-sans text-xs sm:text-sm text-[#5A5248] leading-relaxed">
+            The flagship annual technical symposium of Thakur College of Engineering & Technology (TCET), Mumbai — celebrating over two decades of engineering ingenuity and interdisciplinary innovation.
+          </p>
+        </div>
 
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-full bg-[#F0C020] text-black border-2 border-black shadow-[3px_3px_0px_0px_black] flex items-center justify-center font-black text-lg">
-                ⚡
+        {/* Editorial 3-Column Narrative with Seamless Blended Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+          
+          {/* Column 1: The Legacy */}
+          <div className="manuscript-card p-7 sm:p-9 rounded-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-9 h-9 rounded bg-[#F2ECE0] border border-[#E3D9C6] flex items-center justify-center text-[#C5A059]">
+                <BookOpen className="w-4 h-4" />
               </div>
 
-              <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white leading-tight">
-                Zephyr 2025
+              <span className="font-mono text-[10px] font-bold text-[#C5A059] uppercase tracking-[0.2em] block">
+                01 // TWO DECADES OF LEGACY
+              </span>
+
+              <h3 className="font-serif text-xl text-[#1A1714] font-semibold tracking-wide">
+                Estd. 2004 at TCET Mumbai
               </h3>
 
-              <p className="text-base sm:text-lg font-medium text-white/90 leading-relaxed font-mono">
-                Where Ideas Ignite, spreading an endless technical exposure across engineering and technology.
+              <p className="text-xs sm:text-sm text-[#5A5248] leading-relaxed">
+                Ever since its inception in 2004, <strong>Zephyr</strong> has stood as the definitive technical gathering for aspiring engineers and researchers at Thakur College of Engineering & Technology. Each edition bridges foundational theory with hands-on mastery across hackathons, robotics, and creative arts.
               </p>
             </div>
 
-            <div className="pt-6 mt-6 border-t-2 border-black/40">
-              <span className="font-mono text-xs font-bold text-[#F0C020] uppercase tracking-widest">
-                TCET AUTONOMOUS
-              </span>
+            <div className="pt-4 border-t border-[#E3D9C6] flex items-center justify-between text-xs font-mono text-[#736B60]">
+              <span>21ST EDITION</span>
+              <span className="font-bold text-[#1A1714]">2004 — 2025</span>
             </div>
           </div>
 
-          {/* Card 3: TSDW Student Development & Welfare Association (3 cols) */}
-          <div
-            onMouseEnter={() => setHoveredCard(3)}
-            onMouseLeave={() => setHoveredCard(null)}
-            className="md:col-span-3 bg-[#F0C020] text-[#121212] border-4 border-black shadow-[8px_8px_0px_0px_black] p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 group hover:-translate-y-1 transition-transform relative"
-          >
-            <div className="absolute top-4 right-4">
-              <CornerShape index={2} size="w-4 h-4" />
-            </div>
-
-            <div className="flex items-start gap-6 max-w-3xl">
-              <img
-                src="/TSDW.png"
-                alt="TSDW Logo"
-                className="w-20 h-20 sm:w-24 sm:h-24 bg-white p-2 border-3 border-black shadow-[4px_4px_0px_0px_black] object-contain shrink-0 rounded-none"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "/zephyr-logo.jpeg";
-                }}
-              />
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-black uppercase px-2.5 py-0.5 bg-[#121212] text-white border border-black">
-                    STUDENT COUNCIL
-                  </span>
-                  <span className="font-mono text-xs font-bold text-black/70 uppercase">
-                    ESTD. 2004-05
-                  </span>
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-[#121212]">
-                  TSDW — Thakur Student Development Welfare.
-                </h3>
-                <p className="text-sm sm:text-base font-medium text-[#121212] leading-relaxed">
-                  The TCET Student Development and Welfare Association (TSDW), established in 2004-05 under the guidelines of Mumbai University, serves as a dynamic platform for creativity, innovation, and holistic growth. Commonly known as the Student Council, TSDW represents the student body and spearheads flagship events.
-                </p>
+          {/* Column 2: The Theme */}
+          <div className="manuscript-card p-7 sm:p-9 rounded-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-9 h-9 rounded bg-[#F2ECE0] border border-[#E3D9C6] flex items-center justify-center text-[#1B3B4B]">
+                <Sparkles className="w-4 h-4" />
               </div>
+
+              <span className="font-mono text-[10px] font-bold text-[#1B3B4B] uppercase tracking-[0.2em] block">
+                02 // THE THEME
+              </span>
+
+              <h3 className="font-serif text-xl text-[#1A1714] font-semibold tracking-wide">
+                Spectrum of Innovation
+              </h3>
+
+              <p className="text-xs sm:text-sm text-[#5A5248] leading-relaxed">
+                The 2025 theme conceptualizes the expedition of a cosmic traveler traversing ancient mathematical symbols, maritime architecture, and modern artificial intelligence. From the Eye of Horus to neural networks, Zephyr honors human curiosity across all dimensions.
+              </p>
             </div>
 
-            <div className="shrink-0 font-mono text-xs font-bold p-4 bg-white border-2 border-black shadow-[3px_3px_0px_0px_black] text-center">
-              <div>MUMBAI UNIVERSITY</div>
-              <div className="text-[#D02020] font-black mt-1">AFFILIATED</div>
+            <div className="pt-4 border-t border-[#E3D9C6] flex items-center justify-between text-xs font-mono text-[#736B60]">
+              <span>67 EVENTS</span>
+              <span className="font-bold text-[#1A1714]">11 COMMITTEES</span>
             </div>
           </div>
 
+          {/* Column 3: TSDW Student Council */}
+          <div className="manuscript-card p-7 sm:p-9 rounded-xl space-y-4 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="w-9 h-9 rounded bg-[#F2ECE0] border border-[#E3D9C6] flex items-center justify-center text-[#2D5A46]">
+                <Layers className="w-4 h-4" />
+              </div>
+
+              <span className="font-mono text-[10px] font-bold text-[#2D5A46] uppercase tracking-[0.2em] block">
+                03 // ORGANIZING BODY
+              </span>
+
+              <h3 className="font-serif text-xl text-[#1A1714] font-semibold tracking-wide">
+                TSDW Student Council
+              </h3>
+
+              <p className="text-xs sm:text-sm text-[#5A5248] leading-relaxed">
+                The TCET Student Development and Welfare Association (TSDW), formed under Mumbai University guidelines, serves as the central student leadership council, driving academic development, intercollegiate festivals, and technical leadership.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-[#E3D9C6] flex items-center justify-between text-xs font-mono text-[#736B60]">
+              <span>MUMBAI UNIVERSITY</span>
+              <span className="font-bold text-[#1A1714]">AUTONOMOUS</span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Statistical Highlights Ribbon */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 bg-[#F2ECE0]/70 p-6 sm:p-8 rounded-xl border border-[#E3D9C6]">
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1714]">
+              67<span className="text-[#C5A059]">+</span>
+            </div>
+            <div className="font-mono text-[11px] text-[#736B60] uppercase tracking-wider">
+              Verified Events
+            </div>
+          </div>
+
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1714]">
+              11<span className="text-[#1B3B4B]">+</span>
+            </div>
+            <div className="font-mono text-[11px] text-[#736B60] uppercase tracking-wider">
+              Active Committees
+            </div>
+          </div>
+
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1714]">
+              ₹5.0<span className="text-[#2D5A46]">L+</span>
+            </div>
+            <div className="font-mono text-[11px] text-[#736B60] uppercase tracking-wider">
+              Prize Pool & Grants
+            </div>
+          </div>
+
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1714]">
+              21<span className="text-[#C5A059]">st</span>
+            </div>
+            <div className="font-mono text-[11px] text-[#736B60] uppercase tracking-wider">
+              Annual Edition
+            </div>
+          </div>
         </div>
 
       </div>

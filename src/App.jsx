@@ -1,60 +1,121 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './components/Header';
+import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
 import { EventsPage } from './pages/EventsPage';
+import { SchedulePage } from './pages/SchedulePage';
+import { ContactPage } from './pages/ContactPage';
 import { Footer } from './components/Footer';
+import { Toast } from './components/Toast';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
-    // Check initial pathname if loaded directly on /zephyr-events
-    if (window.location.pathname.includes('zephyr-events')) {
-      return 'events';
-    }
+    const path = window.location.pathname.toLowerCase();
+    if (path.includes('about')) return 'about';
+    if (path.includes('event')) return 'events';
+    if (path.includes('schedule')) return 'schedule';
+    if (path.includes('contact')) return 'contact';
     return 'home';
   });
 
-  // Handle browser popstate / back button
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState('success');
+
+  const showToast = (message, type = 'success') => {
+    setToastMessage(message);
+    setToastType(type);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4500);
+  };
+
+  // Scroll Progress Calculation
   useEffect(() => {
-    const handlePopState = () => {
-      if (window.location.pathname.includes('zephyr-events')) {
-        setCurrentPage('events');
-      } else {
-        setCurrentPage('home');
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (windowHeight > 0) {
+        setScrollProgress((totalScroll / windowHeight) * 100);
       }
     };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Synchronize browser history & back button
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.toLowerCase();
+      if (path.includes('about')) setCurrentPage('about');
+      else if (path.includes('event')) setCurrentPage('events');
+      else if (path.includes('schedule')) setCurrentPage('schedule');
+      else if (path.includes('contact')) setCurrentPage('contact');
+      else setCurrentPage('home');
+    };
+
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigateToPage = (page) => {
-    setCurrentPage(page);
-    if (page === 'events') {
-      window.history.pushState({}, '', '/zephyr-events');
-    } else {
-      window.history.pushState({}, '', '/');
-    }
+  const navigateToPage = (pageId) => {
+    setCurrentPage(pageId);
+    let targetPath = '/';
+    if (pageId === 'about') targetPath = '/about';
+    if (pageId === 'events') targetPath = '/events';
+    if (pageId === 'schedule') targetPath = '/schedule';
+    if (pageId === 'contact') targetPath = '/contact';
+
+    window.history.pushState({}, '', targetPath);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F0F0] text-[#121212] flex flex-col selection:bg-[#F0C020] selection:text-black">
-      {/* 1. Bauhaus Navigation Header */}
-      <Header
-        currentPage={currentPage}
-        setCurrentPage={navigateToPage}
+    <div className="min-h-screen bg-[#FAF7F2] text-[#1C1C1C] flex flex-col font-body selection:bg-[#9E7438] selection:text-white relative overflow-x-hidden">
+      {/* 1. Thin Accent Scroll Progress Bar */}
+      <div
+        className="scroll-progress-bar"
+        style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* 2. Main View (Home or Events page) */}
+      {/* 2. Header Navigation */}
+      <Navbar currentPage={currentPage} onNavigate={navigateToPage} />
+
+      {/* 3. Dynamic Page Rendering */}
       <div className="flex-grow">
-        {currentPage === 'home' ? (
-          <HomePage onNavigateToEvents={() => navigateToPage('events')} />
-        ) : (
-          <EventsPage onGoHome={() => navigateToPage('home')} />
+        {currentPage === 'home' && (
+          <HomePage onNavigate={navigateToPage} />
+        )}
+
+        {currentPage === 'about' && (
+          <AboutPage onNavigate={navigateToPage} />
+        )}
+
+        {currentPage === 'events' && (
+          <EventsPage onShowToast={showToast} onNavigate={navigateToPage} />
+        )}
+
+        {currentPage === 'schedule' && (
+          <SchedulePage onNavigate={navigateToPage} />
+        )}
+
+        {currentPage === 'contact' && (
+          <ContactPage onShowToast={showToast} onNavigate={navigateToPage} />
         )}
       </div>
 
-      {/* 3. Bauhaus Footer */}
-      <Footer />
+      {/* 4. Footer */}
+      <Footer onNavigate={navigateToPage} />
+
+      {/* 5. Feedback Toast */}
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => setToastMessage(null)}
+        />
+      )}
     </div>
   );
 }

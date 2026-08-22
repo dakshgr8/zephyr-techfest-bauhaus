@@ -15,7 +15,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
   const videoRefs = useRef({});
   const containerRef = useRef(null);
 
-  // Initialize all videos
+  // Initialize all videos for infinite seamless looping
   useEffect(() => {
     Object.values(videoRefs.current).forEach((video) => {
       if (video) {
@@ -31,6 +31,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
     setActiveLetter(id);
     const video = videoRefs.current[id];
     if (video) {
+      video.loop = true;
       video.currentTime = 0;
       video.play().catch(() => {});
     }
@@ -56,6 +57,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
     const video = videoRefs.current[id];
     if (video) {
       if (video.paused) {
+        video.loop = true;
         video.currentTime = 0;
         video.play().catch(() => {});
         setActiveLetter(id);
@@ -64,6 +66,15 @@ export function InteractiveWordmark({ onLetterSelect }) {
         video.currentTime = 0;
         setActiveLetter(null);
       }
+    }
+  };
+
+  // Explicit infinite loop safety handler
+  const handleVideoEnded = (id) => {
+    const video = videoRefs.current[id];
+    if (video && activeLetter === id) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
     }
   };
 
@@ -125,6 +136,7 @@ export function InteractiveWordmark({ onLetterSelect }) {
                     playsInline
                     loop
                     preload="auto"
+                    onEnded={() => handleVideoEnded(letter.id)}
                     className={`w-full h-full object-cover mix-blend-multiply transition-opacity duration-300 ${
                       isHovered ? 'opacity-100' : 'opacity-90'
                     }`}
